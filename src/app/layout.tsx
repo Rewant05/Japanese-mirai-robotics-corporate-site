@@ -7,7 +7,7 @@ import Footer from "@/components/layout/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "未来介護ロボティクス | Mirai Kaigo Robotics",
+  title: "未来介護ロボティクス",
   description: "次世代の介護・医療を支える先進的なロボティクス技術。歩行支援ロボット、見守りセンサー、移乗補助アームなど、安心と信頼のケアテクノロジー。",
 };
 

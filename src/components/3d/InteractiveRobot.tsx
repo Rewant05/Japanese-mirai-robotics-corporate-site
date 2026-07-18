@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Sphere, MeshDistortMaterial, Float, ContactShadows, Environment } from "@react-three/drei";
+import { MeshDistortMaterial, Float, ContactShadows, Environment } from "@react-three/drei";
 import * as THREE from "three";
 
 function RobotCore() {
@@ -66,7 +66,7 @@ function RobotCore() {
 export default function InteractiveRobot() {
   return (
     <div className="w-full h-[400px] md:h-[600px] relative z-20 cursor-pointer">
-      <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
+      <Canvas camera={{ position: [0, 0, 8], fov: 45 }} dpr={[1, 1.5]}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={2} color="#ffffff" />
         <pointLight position={[-10, -10, -5]} intensity={1} color="#4bc0c8" />

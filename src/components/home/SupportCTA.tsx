@@ -26,7 +26,7 @@ export default function SupportCTA() {
             03-1234-5678
           </a>
         </div>
-        <p className="mt-6 text-sm text-blue-200">受付時間: 平日 9:00 - 18:00 (土日祝除く)</p>
+        <p className="mt-6 text-sm text-blue-200">受付時間：平日 9:00 - 18:00（土日祝除く）</p>
       </div>
     </section>
   );

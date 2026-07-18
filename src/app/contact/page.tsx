@@ -34,7 +34,7 @@ export default function ContactPage() {
     <div className="bg-mist-blue min-h-screen">
       <section className="bg-mist-blue py-20 px-4 sm:px-6 lg:px-8 text-center">
         <h1 className="text-4xl font-bold text-dark-navy mb-4">お問い合わせ</h1>
-        <p className="text-soft-teal font-semibold tracking-widest uppercase">Contact Us</p>
+        <p className="text-soft-teal font-semibold tracking-widest">ご相談窓口</p>
       </section>
 
       <section className="pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

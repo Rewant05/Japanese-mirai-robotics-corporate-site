@@ -3,7 +3,7 @@ import { Cpu, Network, ShieldAlert, BrainCircuit } from "lucide-react";
 
 export const metadata = {
   title: "テクノロジー | 未来介護ロボティクス",
-  description: "未来介護ロボティクスを支える最先端のAI、センシング、フェイルセーフ技術について解説します。",
+  description: "未来介護ロボティクスを支える最先端の人工知能、センシング、フェイルセーフ技術について解説します。",
 };
 
 export default function TechnologyPage() {
@@ -11,7 +11,7 @@ export default function TechnologyPage() {
     <div className="bg-white">
       <section className="bg-mist-blue py-20 px-4 sm:px-6 lg:px-8 text-center border-b border-gray-200">
         <h1 className="text-4xl font-bold text-dark-navy mb-4">コア・テクノロジー</h1>
-        <p className="text-soft-teal font-semibold tracking-widest uppercase">Technology</p>
+        <p className="text-soft-teal font-semibold tracking-widest">技術紹介</p>
       </section>
 
       <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,9 +29,9 @@ export default function TechnologyPage() {
             <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-6">
               <BrainCircuit className="w-8 h-8 text-medical-blue" />
             </div>
-            <h3 className="text-2xl font-bold text-dark-navy mb-4">M-AI 予測制御システム</h3>
+            <h3 className="text-2xl font-bold text-dark-navy mb-4">予測制御システム</h3>
             <p className="text-gray-600 leading-relaxed">
-              人間の動作には、わずかな予備動作が存在します。独自開発の「M-AI」は、内蔵センサーから得られるミリ秒単位のデータから、次の動作を正確に予測。ユーザーが動こうとした瞬間に、遅延なく自然なアシストを開始します。
+              人間の動作には、わずかな予備動作が存在します。独自開発の予測制御エンジンは、内蔵センサーから得られるミリ秒単位のデータから、次の動作を正確に予測。ユーザーが動こうとした瞬間に、遅延なく自然なアシストを開始します。
             </p>
           </div>
 

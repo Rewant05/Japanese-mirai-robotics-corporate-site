@@ -4,71 +4,81 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Activity, ShieldCheck, Zap } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-// Register ScrollTrigger
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import useDesktopMotion from "@/hooks/useDesktopMotion";
 
 export default function ProductShowcase() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+  const enableMotion = useDesktopMotion();
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Title Animation
-      gsap.fromTo(titleRef.current, 
-        { y: 30, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-          },
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: "power3.out"
-        }
-      );
+    if (!enableMotion) return;
 
-      // Cards Stagger Animation
-      if (cardsRef.current) {
-        gsap.fromTo(cardsRef.current.children, 
-          { y: 50, opacity: 0 },
-          {
-            scrollTrigger: {
-              trigger: cardsRef.current,
-              start: "top 75%",
-            },
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            stagger: 0.2,
-            ease: "power3.out"
+    let ctx: { revert: () => void } | undefined;
+    let mounted = true;
+
+    Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(
+      ([{ default: gsap }, { ScrollTrigger }]) => {
+        if (!mounted) return;
+
+        gsap.registerPlugin(ScrollTrigger);
+        ctx = gsap.context(() => {
+          gsap.fromTo(
+            titleRef.current,
+            { y: 30, opacity: 0 },
+            {
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top 80%",
+              },
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              ease: "power3.out",
+            }
+          );
+
+          if (cardsRef.current) {
+            gsap.fromTo(
+              cardsRef.current.children,
+              { y: 50, opacity: 0 },
+              {
+                scrollTrigger: {
+                  trigger: cardsRef.current,
+                  start: "top 75%",
+                },
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: "power3.out",
+              }
+            );
           }
-        );
+        }, sectionRef);
       }
-    }, sectionRef);
+    );
 
-    return () => ctx.revert();
-  }, []);
+    return () => {
+      mounted = false;
+      ctx?.revert();
+    };
+  }, [enableMotion]);
 
   const products = [
     {
       id: "hikari",
-      name: "HIKARI",
+      name: "ひかり",
       jpName: "歩行支援ロボット",
-      description: "AIが使用者の歩行パターンを学習し、最適なアシスト力を提供。転倒防止機能も搭載。",
+      description: "人工知能が使用者の歩行パターンを学習し、最適なアシスト力を提供。転倒防止機能も搭載。",
       icon: <Activity className="w-8 h-8 text-medical-blue" />,
       color: "bg-blue-50",
       image: "/images/hikari-product.png"
     },
     {
       id: "mamori",
-      name: "MAMORI",
+      name: "まもり",
       jpName: "見守りセンサー",
       description: "非接触型のバイタルセンサー。心拍・呼吸・体動を24時間モニタリングし、異常を即座に通知。",
       icon: <ShieldCheck className="w-8 h-8 text-soft-teal" />,
@@ -77,7 +87,7 @@ export default function ProductShowcase() {
     },
     {
       id: "yasuragi",
-      name: "YASURAGI",
+      name: "やすらぎ",
       jpName: "移乗補助アーム",
       description: "ベッドから車椅子への移乗を安全かつスムーズにサポート。介護者の腰への負担を大幅に軽減します。",
       icon: <Zap className="w-8 h-8 text-purple-600" />,
@@ -91,7 +101,7 @@ export default function ProductShowcase() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={titleRef} className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-dark-navy mb-4">主要製品</h2>
-          <p className="text-sm font-semibold text-soft-teal tracking-widest uppercase">Our Products</p>
+          <p className="text-sm font-semibold text-soft-teal tracking-widest">現場に寄り添うラインアップ</p>
         </div>
 
         <div ref={cardsRef} className="grid grid-cols-1 lg:grid-cols-3 gap-8">

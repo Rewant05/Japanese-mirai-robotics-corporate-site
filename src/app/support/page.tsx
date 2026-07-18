@@ -14,7 +14,7 @@ export default function SupportPage() {
       a: "はい、可能です。実際の施設環境で1週間の無料トライアルを実施しております。担当者が設置と基本的な操作説明に伺います。"
     },
     {
-      q: "スタッフがIT機器に不慣れですが、使いこなせますか？",
+      q: "スタッフが情報機器に不慣れですが、使いこなせますか？",
       a: "現場の方々が直感的に操作できるよう、シンプルなボタン配置と音声ガイダンスを採用しています。また、導入時のスタッフ向け講習会も無償で実施しております。"
     },
     {
@@ -31,7 +31,7 @@ export default function SupportPage() {
     <div className="bg-white">
       <section className="bg-mist-blue py-20 px-4 sm:px-6 lg:px-8 text-center border-b border-gray-200">
         <h1 className="text-4xl font-bold text-dark-navy mb-4">サポートセンター</h1>
-        <p className="text-soft-teal font-semibold tracking-widest uppercase">Support</p>
+        <p className="text-soft-teal font-semibold tracking-widest">サポート情報</p>
       </section>
 
       <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -60,7 +60,7 @@ export default function SupportPage() {
             </div>
             <h3 className="text-xl font-bold text-dark-navy mb-3">よくあるご質問</h3>
             <p className="text-gray-600 text-sm mb-6">お客様から寄せられるご質問とその回答をまとめています。</p>
-            <a href="#faq" className="text-purple-500 font-medium hover:underline">FAQを見る</a>
+            <a href="#faq" className="text-purple-500 font-medium hover:underline">質問を見る</a>
           </div>
         </div>
 
@@ -71,11 +71,11 @@ export default function SupportPage() {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-mist-blue rounded-2xl p-6">
                 <h3 className="text-lg font-bold text-dark-navy mb-3 flex items-start">
-                  <span className="text-medical-blue mr-3 shrink-0">Q.</span>
+                  <span className="text-medical-blue mr-3 shrink-0">問</span>
                   {faq.q}
                 </h3>
                 <div className="text-gray-700 flex items-start">
-                  <span className="text-soft-teal mr-3 font-bold shrink-0">A.</span>
+                  <span className="text-soft-teal mr-3 font-bold shrink-0">答</span>
                   <p className="leading-relaxed text-sm">{faq.a}</p>
                 </div>
               </div>

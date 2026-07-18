@@ -5,7 +5,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 function Particles() {
-  const count = 100;
+  const count = 60;
   const mesh = useRef<THREE.InstancedMesh>(null);
   const light = useRef<THREE.PointLight>(null);
 
@@ -56,7 +56,7 @@ function Particles() {
     <>
       <pointLight ref={light} distance={40} intensity={8} color="#4bc0c8" />
       <instancedMesh ref={mesh} args={[undefined, undefined, count]}>
-        <sphereGeometry args={[0.2, 16, 16]} />
+        <sphereGeometry args={[0.2, 8, 8]} />
         <meshBasicMaterial color="#ffffff" transparent opacity={0.6} />
       </instancedMesh>
     </>
@@ -66,7 +66,7 @@ function Particles() {
 export default function ParticlesBackground() {
   return (
     <div className="absolute inset-0 z-0 pointer-events-none opacity-30">
-      <Canvas camera={{ fov: 75, position: [0, 0, 30] }}>
+      <Canvas camera={{ fov: 75, position: [0, 0, 30] }} dpr={[1, 1.25]}>
         <Particles />
       </Canvas>
     </div>

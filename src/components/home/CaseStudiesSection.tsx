@@ -3,39 +3,51 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight, Quote } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import useDesktopMotion from "@/hooks/useDesktopMotion";
 
 export default function CaseStudiesSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+  const enableMotion = useDesktopMotion();
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (cardsRef.current) {
-        gsap.fromTo(cardsRef.current.children, 
-          { x: (i) => i % 2 === 0 ? -50 : 50, opacity: 0 },
-          {
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top 75%",
-            },
-            x: 0,
-            opacity: 1,
-            duration: 1,
-            stagger: 0.2,
-            ease: "power3.out"
-          }
-        );
-      }
-    }, sectionRef);
+    if (!enableMotion) return;
 
-    return () => ctx.revert();
-  }, []);
+    let ctx: { revert: () => void } | undefined;
+    let mounted = true;
+
+    Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(
+      ([{ default: gsap }, { ScrollTrigger }]) => {
+        if (!mounted) return;
+
+        gsap.registerPlugin(ScrollTrigger);
+        ctx = gsap.context(() => {
+          if (cardsRef.current) {
+            gsap.fromTo(
+              cardsRef.current.children,
+              { x: (i: number) => (i % 2 === 0 ? -50 : 50), opacity: 0 },
+              {
+                scrollTrigger: {
+                  trigger: sectionRef.current,
+                  start: "top 75%",
+                },
+                x: 0,
+                opacity: 1,
+                duration: 1,
+                stagger: 0.2,
+                ease: "power3.out",
+              }
+            );
+          }
+        }, sectionRef);
+      }
+    );
+
+    return () => {
+      mounted = false;
+      ctx?.revert();
+    };
+  }, [enableMotion]);
 
   return (
     <section ref={sectionRef} className="py-24 bg-white overflow-hidden">
@@ -43,7 +55,7 @@ export default function CaseStudiesSection() {
         <div className="flex flex-col md:flex-row justify-between items-end mb-12">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-dark-navy mb-4">導入事例</h2>
-            <p className="text-sm font-semibold text-soft-teal tracking-widest uppercase">Case Studies</p>
+            <p className="text-sm font-semibold text-soft-teal tracking-widest">現場から届いた声</p>
           </div>
           <Link
             href="/case-studies"
@@ -62,7 +74,7 @@ export default function CaseStudiesSection() {
                 <span className="bg-medical-blue text-white text-xs px-3 py-1 rounded-full font-medium">介護老人福祉施設</span>
               </div>
               <p className="text-lg text-dark-navy font-medium mb-6 leading-relaxed">
-                「『YASURAGI』の導入により、スタッフの腰痛発生率が激減しました。移乗介助にかかる時間も短縮され、入居者様とのコミュニケーションの時間が増えました。」
+                「『やすらぎ』の導入により、スタッフの腰痛発生率が激減しました。移乗介助にかかる時間も短縮され、入居者様とのコミュニケーションの時間が増えました。」
               </p>
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-gray-300 rounded-full mr-4"></div>
@@ -81,7 +93,7 @@ export default function CaseStudiesSection() {
                 <span className="bg-soft-teal text-white text-xs px-3 py-1 rounded-full font-medium">リハビリテーション病院</span>
               </div>
               <p className="text-lg text-dark-navy font-medium mb-6 leading-relaxed">
-                「『HIKARI』を使った歩行訓練は、患者様のモチベーション向上に大きく貢献しています。データに基づいた客観的な評価が可能になりました。」
+                「『ひかり』を使った歩行訓練は、患者様のモチベーション向上に大きく貢献しています。データに基づいた客観的な評価が可能になりました。」
               </p>
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-gray-300 rounded-full mr-4"></div>

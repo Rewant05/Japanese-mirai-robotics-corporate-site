@@ -44,7 +44,7 @@ export default function PrivacyPolicyPage() {
             <section>
               <h2 className="text-xl font-bold text-dark-navy mb-4">4. センサーデータおよびバイタルデータの取り扱い</h2>
               <p>
-                当社の製品（見守りセンサー等）を通じて取得されるバイタルデータ等の情報は、個人を特定できないよう匿名化・暗号化された上で、サービスの品質向上およびAIアルゴリズムの学習データとしてのみ利用されます。お客さまの明示的な同意なく、個人の健康状態等のデータを第三者に提供することは一切ありません。
+                当社の製品（見守りセンサー等）を通じて取得されるバイタルデータ等の情報は、個人を特定できないよう匿名化・暗号化された上で、サービスの品質向上および人工知能アルゴリズムの学習データとしてのみ利用されます。お客さまの明示的な同意なく、個人の健康状態等のデータを第三者に提供することは一切ありません。
               </p>
             </section>
 
@@ -54,7 +54,7 @@ export default function PrivacyPolicyPage() {
                 当社の個人情報の取扱に関するお問い合せは下記までご連絡ください。<br /><br />
                 未来介護ロボティクス株式会社<br />
                 〒100-0000 東京都千代田区未来ロボット街1-2-3 未来タワー 45F<br />
-                Email: privacy@mirai-kaigo-robotics.co.jp
+                メール：privacy@mirai-kaigo-robotics.co.jp
               </p>
             </section>
           </div>

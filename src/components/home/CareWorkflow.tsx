@@ -2,47 +2,59 @@
 
 import { useEffect, useRef } from "react";
 import { Building2, Home, Hospital } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import useDesktopMotion from "@/hooks/useDesktopMotion";
 
 export default function CareWorkflow() {
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+  const enableMotion = useDesktopMotion();
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (cardsRef.current) {
-        gsap.fromTo(cardsRef.current.children, 
-          { scale: 0.9, y: 40, opacity: 0 },
-          {
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top 75%",
-            },
-            scale: 1,
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: "back.out(1.2)"
-          }
-        );
-      }
-    }, sectionRef);
+    if (!enableMotion) return;
 
-    return () => ctx.revert();
-  }, []);
+    let ctx: { revert: () => void } | undefined;
+    let mounted = true;
+
+    Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(
+      ([{ default: gsap }, { ScrollTrigger }]) => {
+        if (!mounted) return;
+
+        gsap.registerPlugin(ScrollTrigger);
+        ctx = gsap.context(() => {
+          if (cardsRef.current) {
+            gsap.fromTo(
+              cardsRef.current.children,
+              { scale: 0.9, y: 40, opacity: 0 },
+              {
+                scrollTrigger: {
+                  trigger: sectionRef.current,
+                  start: "top 75%",
+                },
+                scale: 1,
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "back.out(1.2)",
+              }
+            );
+          }
+        }, sectionRef);
+      }
+    );
+
+    return () => {
+      mounted = false;
+      ctx?.revert();
+    };
+  }, [enableMotion]);
 
   return (
     <section ref={sectionRef} className="py-24 bg-mist-blue relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-dark-navy mb-4">あらゆる現場で活躍</h2>
-          <p className="text-sm font-semibold text-soft-teal tracking-widest uppercase">Care Support Workflows</p>
+          <p className="text-sm font-semibold text-soft-teal tracking-widest">ケア現場別の活用例</p>
           <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
             施設、病院、そして在宅まで。それぞれの環境に合わせたソリューションで、ケアの質を向上させます。
           </p>

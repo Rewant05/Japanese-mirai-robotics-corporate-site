@@ -14,11 +14,11 @@ export default function Footer() {
               <Activity className="h-8 w-8 text-soft-teal" />
               <div className="flex flex-col">
                 <span className="text-xl font-bold tracking-tight text-white">未来介護ロボティクス</span>
-                <span className="text-[10px] text-gray-400 uppercase tracking-widest">Mirai Kaigo Robotics</span>
+                <span className="text-[10px] text-gray-400 tracking-widest">介護ロボット開発・運用支援</span>
               </div>
             </Link>
             <p className="text-sm text-gray-400 leading-relaxed mt-4">
-              人とロボットが共生する、新しい介護の形を創造します。最先端のAIとロボティクス技術で、介護現場の負担軽減と高齢者の自立支援を実現します。
+              人とロボットが共生する、新しい介護の形を創造します。最先端の人工知能とロボティクス技術で、介護現場の負担軽減と高齢者の自立支援を実現します。
             </p>
           </div>
 
@@ -30,9 +30,9 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { name: "製品一覧", href: "/products" },
-                { name: "歩行支援ロボット「HIKARI」", href: "/products#hikari" },
-                { name: "見守りセンサー「MAMORI」", href: "/products#mamori" },
-                { name: "移乗補助アーム「YASURAGI」", href: "/products#yasuragi" },
+                { name: "歩行支援ロボット「ひかり」", href: "/products#hikari" },
+                { name: "見守りセンサー「まもり」", href: "/products#mamori" },
+                { name: "移乗補助アーム「やすらぎ」", href: "/products#yasuragi" },
                 { name: "コア・テクノロジー", href: "/technology" },
               ].map((link) => (
                 <li key={link.name}>
@@ -93,17 +93,8 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-xs text-gray-500 text-center md:text-left">
-            &copy; {currentYear} Mirai Kaigo Robotics Co., Ltd. All rights reserved.
+            &copy; {currentYear} 未来介護ロボティクス株式会社
           </p>
-          <div className="mt-4 md:mt-0 flex space-x-4">
-            {/* Social icons placeholders */}
-            <div className="w-8 h-8 rounded-full bg-gray-800 hover:bg-soft-teal transition-colors flex items-center justify-center cursor-pointer">
-              <span className="text-xs font-bold">X</span>
-            </div>
-            <div className="w-8 h-8 rounded-full bg-gray-800 hover:bg-soft-teal transition-colors flex items-center justify-center cursor-pointer">
-              <span className="text-xs font-bold">in</span>
-            </div>
-          </div>
         </div>
       </div>
     </footer>

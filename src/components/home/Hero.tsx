@@ -2,43 +2,62 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
-import gsap from "gsap";
-import InteractiveRobot from "@/components/3d/InteractiveRobot";
+import useDesktopMotion from "@/hooks/useDesktopMotion";
+
+const InteractiveRobot = dynamic(() => import("@/components/3d/InteractiveRobot"), {
+  ssr: false,
+  loading: () => <div className="w-full h-[600px]" aria-hidden="true" />,
+});
 
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
+  const enableMotion = useDesktopMotion(768);
+  const showInteractiveRobot = useDesktopMotion(1024);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Background parallax slightly
-      gsap.fromTo(".hero-bg", 
-        { scale: 1.1 },
-        {
-          scale: 1,
-          duration: 3,
-          ease: "power2.out"
-        }
-      );
+    if (!enableMotion) return;
 
-      // Text stagger animation
-      gsap.fromTo(".hero-element", 
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          stagger: 0.2,
-          ease: "power3.out",
-          delay: 0.3
-        }
-      );
-    }, heroRef);
+    let ctx: { revert: () => void } | undefined;
+    let mounted = true;
 
-    return () => ctx.revert();
-  }, []);
+    import("gsap").then(({ default: gsap }) => {
+      if (!mounted) return;
+
+      ctx = gsap.context(() => {
+        gsap.fromTo(
+          ".hero-bg",
+          { scale: 1.1 },
+          {
+            scale: 1,
+            duration: 3,
+            ease: "power2.out",
+          }
+        );
+
+        gsap.fromTo(
+          ".hero-element",
+          { y: 40, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power3.out",
+            delay: 0.3,
+          }
+        );
+      }, heroRef);
+    });
+
+    return () => {
+      mounted = false;
+      ctx?.revert();
+    };
+  }, [enableMotion]);
 
   return (
     <section ref={heroRef} className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-dark-navy">
@@ -46,7 +65,7 @@ export default function Hero() {
       <div className="absolute inset-0 z-0 hero-bg">
         <Image 
           src="/images/hero-bg.png" 
-          alt="Modern Care Facility" 
+          alt="明るい介護施設の共用スペース"
           fill 
           priority
           className="object-cover opacity-30"
@@ -58,7 +77,7 @@ export default function Hero() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center h-full pt-20">
         
         <div ref={textRef} className="flex flex-col items-start text-left">
-          <span className="hero-element text-soft-teal font-bold tracking-widest text-sm mb-4 uppercase bg-white/80 px-4 py-1 rounded-full shadow-sm">Next Generation Care</span>
+          <span className="hero-element text-soft-teal font-bold tracking-widest text-sm mb-4 bg-white/80 px-4 py-1 rounded-full shadow-sm">次世代ケア支援</span>
           <h1 className="hero-element text-4xl md:text-6xl lg:text-7xl font-extrabold text-dark-navy tracking-tight mb-6 leading-tight">
             温もりと、<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-medical-blue to-soft-teal">テクノロジー</span>の融合。
@@ -85,10 +104,11 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* 3D Interactive AI Robot */}
-        <div className="hero-element flex justify-center items-center w-full h-full">
-          <InteractiveRobot />
-        </div>
+        {showInteractiveRobot ? (
+          <div className="hero-element hidden lg:flex justify-center items-center w-full h-full">
+            <InteractiveRobot />
+          </div>
+        ) : null}
 
       </div>
     </section>
